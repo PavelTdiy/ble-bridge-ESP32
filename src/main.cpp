@@ -15,7 +15,11 @@
 // */
 
 #include <Arduino.h>
+// lib for ble
 #include <NimBLEDevice.h>
+// libs for DS18B20
+#include <OneWire.h>
+#include <DallasTemperature.h>
 
 // See the following for generating UUIDs:
 // https://www.uuidgenerator.net/
@@ -26,6 +30,8 @@
 
 // board variables
 unsigned long previousMillis = 0;
+OneWire oneWire(21);
+DallasTemperature DSsensors(&oneWire);
 
 // ble variables
 BLEServer *pServer = NULL;
@@ -95,6 +101,13 @@ class MyCallbacks : public BLECharacteristicCallbacks
 
 #endif
 
+int readTemperature(int dsIndex)
+{
+  DSsensors.requestTemperatures(); // Send the command to get temperatures
+
+  return DSsensors.getTempCByIndex(dsIndex);
+}
+
 void connectedTask(void *parameter)
 {
   for (;;)
@@ -102,12 +115,13 @@ void connectedTask(void *parameter)
     if (deviceConnected)
     {
       unsigned long currentMillis = millis();
-      if (currentMillis - previousMillis >= 2000)
+      if (currentMillis - previousMillis >= 3000)
       {
-        pTxCharacteristic->setValue(&txValue, 1);
+        printf("Client notifying...\n");
+        pTxCharacteristic->setValue(&txValue, 2);
         pTxCharacteristic->notify();
-        printf("Client notified\n");
-        txValue++;
+        txValue = readTemperature(0);
+        Serial.println(txValue);
         digitalWrite(LED_BUILTIN, HIGH);
         delay(100);
         digitalWrite(LED_BUILTIN, LOW);
@@ -140,6 +154,8 @@ void setup()
   Serial.begin(9600);
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
+  // Start up the Dallas DS18B20 library
+  DSsensors.begin();
 
   // Create the BLE Device
   BLEDevice::init("Ble Bridge");
