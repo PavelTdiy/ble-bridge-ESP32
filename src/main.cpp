@@ -15,11 +15,24 @@
 // */
 
 #include <Arduino.h>
+#include <String.h>
 // lib for ble
 #include <NimBLEDevice.h>
+
 // libs for DS18B20
 #include <OneWire.h>
 #include <DallasTemperature.h>
+
+// include Renesas lib to control GPAK from I2C
+#include "Silego.h"
+#include "macros/SLG46826.h"    // Include macros for SLG46531
+
+// lib to control micro-servos using angle references
+#include "Servo.h"
+
+// config i2c pins
+#define I2C_SCL 18
+#define I2C_SDA 19
 
 // See the following for generating UUIDs:
 // https://www.uuidgenerator.net/
@@ -40,10 +53,18 @@ bool deviceConnected = false;
 bool oldDeviceConnected = false;
 uint8_t txValue = 0;
 
-#ifndef MyServerCallbacks_h
-#define MyServerCallbacks_h
+// Create an instance of Silego class called
+// "silego" with device address 0x08
+Silego silego(0x08, I2C_SDA, I2C_SCL);
 
-class MyServerCallbacks : public BLEServerCallbacks
+//Create an instance of Servo class
+Servo myServo(4);
+
+
+#ifndef BleServerCallbacks_h
+#define BleServerCallbacks_h
+
+class BleServerCallbacks : public BLEServerCallbacks
 {
   void onConnect(BLEServer *pServer)
   {
@@ -78,10 +99,10 @@ class MyServerCallbacks : public BLEServerCallbacks
 };
 #endif
 
-#ifndef MyCallbacks_h
-#define MyCallbacks_h
+#ifndef CharacteristicCallbacks_h
+#define CharacteristicCallbacks_h
 
-class MyCallbacks : public BLECharacteristicCallbacks
+class CharacteristicCallbacks : public BLECharacteristicCallbacks
 {
   void onWrite(BLECharacteristic *pCharacteristic)
   {
@@ -89,13 +110,58 @@ class MyCallbacks : public BLECharacteristicCallbacks
 
     if (rxValue.length() > 0)
     {
-      printf("*********\n");
       printf("Received Value: ");
-      for (int i = 0; i < rxValue.length(); i++)
-        printf("%d", rxValue[i]);
-
+      printf("%s\n", rxValue.c_str());
+      printf("Converted Value: ");
+      int numVal = strToInt(rxValue);
+      printf("%s\n", numVal);
+      // for (int i = 0; i < rxValue.length(); i++)
+      //   printf("%d", rxValue[i]);
       printf("\n*********\n");
+
+      myServo.setDegServo(77, 0);
     }
+  }
+  // int convertInputToNumber(std::string str){
+  //   int i = 0xAA;
+  //   float f;
+  //   double d;
+  //   //std::string str;
+
+  //   try {
+  //       // string -> integer
+  //       printf("\n****trying to convert*****\n");
+  //       int i = std::atoi(str);
+
+  //       // string -> float
+  //       float f = std::stof(str);
+
+  //       // string -> double 
+  //       double d = std::stod(str);
+  //   } catch (...) {
+  //       // error management
+  //   }
+  //   return i;
+  // }
+  int strToInt(std::string str){
+    int i = 0;
+    printf("\n****trying to convert 1\n");
+    for (char c : str) {
+        printf("\n****trying to convert cycle\n");
+        // Checking if the element is number
+        if (c >= 48 && c <= 57) {
+            i = i * 10 + (c - 48);
+            printf("%s\n", i);
+        }
+        // Otherwise print bad output
+        else {
+            printf("Bad Input");
+            return 1;
+        }
+    }
+    printf("\n****trying to convert 3 and res");
+    printf("%s\n", i);
+    return i;
   }
 };
 
@@ -156,13 +222,15 @@ void setup()
   digitalWrite(LED_BUILTIN, LOW);
   // Start up the Dallas DS18B20 library
   DSsensors.begin();
+  // set Servo to zero
+  myServo.setDegServo(0, 0);
 
   // Create the BLE Device
   BLEDevice::init("Ble Bridge");
 
   // Create the BLE Server
   pServer = BLEDevice::createServer();
-  pServer->setCallbacks(new MyServerCallbacks());
+  pServer->setCallbacks(new BleServerCallbacks());
 
   // Create the BLE Service
   BLEService *pService = pServer->createService(SERVICE_UUID);
@@ -192,7 +260,7 @@ void setup()
       *********************************************/
       NIMBLE_PROPERTY::WRITE);
 
-  pRxCharacteristic->setCallbacks(new MyCallbacks());
+  pRxCharacteristic->setCallbacks(new CharacteristicCallbacks());
 
   // Start the service
   pService->start();

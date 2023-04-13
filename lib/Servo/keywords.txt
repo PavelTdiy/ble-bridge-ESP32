@@ -1,0 +1,4 @@
+SERVO       KEYWORD1
+Servo       KEYWORD2
+GreenPAK    KEYWORD3
+I2C         KEYWORD4
