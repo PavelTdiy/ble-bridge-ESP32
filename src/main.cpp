@@ -112,56 +112,37 @@ class CharacteristicCallbacks : public BLECharacteristicCallbacks
     {
       printf("Received Value: ");
       printf("%s\n", rxValue.c_str());
-      printf("Converted Value: ");
-      int numVal = strToInt(rxValue);
-      printf("%s\n", numVal);
-      // for (int i = 0; i < rxValue.length(); i++)
-      //   printf("%d", rxValue[i]);
-      printf("\n*********\n");
+      // int numVal = 77;//strToInt("rxValue");
 
-      myServo.setDegServo(77, 0);
+      // int n = 0;
+      // for (int i = 0; i < 2; i++) {
+      //   char c = rxValue[i];
+      //   if (c >= 48 && c <= 57) {
+      //     n = i * 10 + (c - 48);
+      //   }
+      //   else {
+      //       printf("Bad Input");
+      //   }
+      // }
+      myServo.setDegStrServo(rxValue, 0);
     }
   }
-  // int convertInputToNumber(std::string str){
-  //   int i = 0xAA;
-  //   float f;
-  //   double d;
-  //   //std::string str;
-
-  //   try {
-  //       // string -> integer
-  //       printf("\n****trying to convert*****\n");
-  //       int i = std::atoi(str);
-
-  //       // string -> float
-  //       float f = std::stof(str);
-
-  //       // string -> double 
-  //       double d = std::stod(str);
-  //   } catch (...) {
-  //       // error management
-  //   }
-  //   return i;
-  // }
   int strToInt(std::string str){
     int i = 0;
-    printf("\n****trying to convert 1\n");
-    for (char c : str) {
-        printf("\n****trying to convert cycle\n");
-        // Checking if the element is number
-        if (c >= 48 && c <= 57) {
-            i = i * 10 + (c - 48);
-            printf("%s\n", i);
-        }
-        // Otherwise print bad output
-        else {
-            printf("Bad Input");
-            return 1;
-        }
-    }
-    printf("\n****trying to convert 3 and res");
-    printf("%s\n", i);
-    return i;
+    // for (char c : str) {
+    //     printf("%s\n", i);
+    //     printf("%s\n", c);
+    //     // Checking if the element is number
+    //     if (c >= 48 && c <= 57) {
+    //         //i = i * 10 + (c - 48);
+    //     }
+    //     Otherwise print bad output
+    //     else {
+    //         printf("Bad Input");
+    //         return 1;
+    //     }
+    // }
+    return 11;
   }
 };
 
