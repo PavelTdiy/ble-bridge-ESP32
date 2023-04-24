@@ -169,9 +169,11 @@ void connectedTask(void *parameter)
     }
 
     if (buttonWerePressed) {
+      int rndm = rand() % 0x7f;
       Serial.println("button pressed");
       buttonWerePressed = false;
-      myServo.setDegStrServo("73", 0);
+      myServo.setDegServo(rndm, 0); // not string here
+      // myServo.setDegStrServo("73", 0);
       digitalWrite(LED_BUILTIN, HIGH);
       delay(100);
       digitalWrite(LED_BUILTIN, LOW);

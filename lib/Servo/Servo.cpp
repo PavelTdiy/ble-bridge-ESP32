@@ -22,15 +22,16 @@ void Servo::setDegServo(int deg, int joint) {
   int delayCounterData = round(255*deg/MaxAngles[joint]);
   if (delayCounterData <= 0) {delayCounterData = 1;};
   if (delayCounterData > 255) {delayCounterData = 255;};
-  Serial.printf("Sending to servo ");
-  Serial.println(deg);
-  Serial.println(delayCounterData);
-  silego.writeI2C(0xAF, delayCounterData);
+  Serial.print("Set servo ");
+  Serial.print(deg);
+  Serial.print(u8"° = ");
+  Serial.print(delayCounterData);
+  Serial.println(" to DLY");
+  silego.writeI2C(AddressesServo[joint], delayCounterData);
 }
 
 void Servo::setDegStrServo(std::string degStr, int joint){
-  int num = strToInt(degStr);
-  setDegServo(num, 0);
+  setDegServo(strToInt(degStr), 0);
 }
 
 int Servo::strToInt(std::string strVal) {
@@ -49,8 +50,9 @@ int Servo::strToInt(std::string strVal) {
   return n;
 }
 
-void Servo::setPosition(int angles[10]) {
-  for (int i = 0; i < sizeof(angles); i++){
+void Servo::setPosition(int angles[4]) {
+  size_t length = sizeof(angles);
+  for (int i = 0; i < length; i++){
     setDegServo(angles[i],i);
   };
 }
