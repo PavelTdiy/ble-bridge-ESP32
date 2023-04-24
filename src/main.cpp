@@ -115,37 +115,8 @@ class CharacteristicCallbacks : public BLECharacteristicCallbacks
     {
       printf("Received Value: ");
       printf("%s\n", rxValue.c_str());
-      // int numVal = 77;//strToInt("rxValue");
-
-      // int n = 0;
-      // for (int i = 0; i < 2; i++) {
-      //   char c = rxValue[i];
-      //   if (c >= 48 && c <= 57) {
-      //     n = i * 10 + (c - 48);
-      //   }
-      //   else {
-      //       printf("Bad Input");
-      //   }
-      // }
       myServo.setDegStrServo(rxValue, 0);
     }
-  }
-  int strToInt(std::string str){
-    int i = 0;
-    // for (char c : str) {
-    //     printf("%s\n", i);
-    //     printf("%s\n", c);
-    //     // Checking if the element is number
-    //     if (c >= 48 && c <= 57) {
-    //         //i = i * 10 + (c - 48);
-    //     }
-    //     Otherwise print bad output
-    //     else {
-    //         printf("Bad Input");
-    //         return 1;
-    //     }
-    // }
-    return 11;
   }
 };
 
@@ -219,6 +190,7 @@ void setup()
   pinMode(BUTTON, INPUT_PULLUP); // ext button
   attachInterrupt(BUTTON, bint, FALLING); // button interrupt
   digitalWrite(LED_BUILTIN, LOW);
+
   // Start up the Dallas DS18B20 library
   DSsensors.begin();
   // set Servo to zero
