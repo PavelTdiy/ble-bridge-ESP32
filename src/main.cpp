@@ -34,6 +34,8 @@
 #define I2C_SCL 18
 #define I2C_SDA 19
 
+#define BUTTON 32 //dont use IO02 - this is LED_BUILTIN
+
 // See the following for generating UUIDs:
 // https://www.uuidgenerator.net/
 
@@ -51,6 +53,7 @@ BLEServer *pServer = NULL;
 BLECharacteristic *pTxCharacteristic;
 bool deviceConnected = false;
 bool oldDeviceConnected = false;
+bool buttonWerePressed = false;
 uint8_t txValue = 0;
 
 // Create an instance of Silego class called
@@ -155,6 +158,10 @@ int readTemperature(int dsIndex)
   return DSsensors.getTempCByIndex(dsIndex);
 }
 
+void IRAM_ATTR bint() {
+  buttonWerePressed = true;
+}
+
 void connectedTask(void *parameter)
 {
   for (;;)
@@ -190,6 +197,15 @@ void connectedTask(void *parameter)
       oldDeviceConnected = deviceConnected;
     }
 
+    if (buttonWerePressed) {
+      Serial.println("button pressed");
+      buttonWerePressed = false;
+      myServo.setDegStrServo("73", 0);
+      digitalWrite(LED_BUILTIN, HIGH);
+      delay(100);
+      digitalWrite(LED_BUILTIN, LOW);
+    }
+
     vTaskDelay(10 / portTICK_PERIOD_MS); // Delay between loops to reset watchdog timer
   }
 
@@ -200,6 +216,8 @@ void setup()
 {
   Serial.begin(9600);
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(BUTTON, INPUT_PULLUP); // ext button
+  attachInterrupt(BUTTON, bint, FALLING); // button interrupt
   digitalWrite(LED_BUILTIN, LOW);
   // Start up the Dallas DS18B20 library
   DSsensors.begin();

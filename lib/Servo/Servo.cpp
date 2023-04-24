@@ -30,23 +30,33 @@ void Servo::setDegServo(int deg, int joint) {
 
 void Servo::setDegStrServo(std::string degStr, int joint){
   // 
-  Serial.println("setDegStrServo:");
-  Serial.println(degStr.size());
+  Serial.print("string size - ");
+  Serial.print(degStr.size());
+  Serial.print(", val - ");
   Serial.println(degStr.c_str());
   int n = 0;
   for (int i = degStr.size(); i --> 0;) {
+  // for (int i = degStr.size() - 1; i > -1; i--) {
     char c = degStr[i];
-    Serial.println(i);
-    Serial.println(c);
-    Serial.println((c - 48) * 10 ^ (degStr.size() - i -1));
+    int pw = degStr.size() - 1 - i;
+    Serial.print("i=");
+    Serial.print(i);
+    Serial.print(", c=");
+    Serial.print(c);
+    Serial.print(", val=");
+    Serial.print((c - 48));
+    Serial.print(", power=");
+    Serial.print(pw);
+    Serial.print(", calculated - ");
+    Serial.println((c - 48) * pow(10, pw));
     if (c >= 48 && c <= 57) {
-      n += (c - 48) * 10 ^ (degStr.size() - i -1);
+      n += (c - 48) * pow(10, pw);
     }
     else {
-        printf("Bad Input");
+      printf("Bad Input. Ignored");
     }
   }
-  setDegServo(n ,0);
+  setDegServo(n, 0);
 }
 
 void Servo::setPosition(int angles[10]) {
