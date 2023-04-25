@@ -2,6 +2,7 @@
 #include "Servo.h"
 #include <math.h>
 #include <String.h>
+#include <string>
 
 using namespace std;
 

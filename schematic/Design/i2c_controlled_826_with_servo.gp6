@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GPDProject version="26" oldestCompatibleVersion="26" GPDVersion="6.35.003" lastChange="18.04.2023 18:07" projectChecksumState="1" projectChecksum="8dd2626a">
+<GPDProject version="26" oldestCompatibleVersion="26" GPDVersion="6.35.003" lastChange="24.04.2023 20:07" projectChecksumState="1" projectChecksum="befe690a">
     <generalProjectSettings/>
     <chip family="04" type="06" friendlyName="GreenPAK 6" partNumber="36" package="16">
         <nvmData registerLenght="2048">0 0 0 0 0 0 7D 21 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 12 0 74 0 D0 1 40 7 0 1D 0 0 0 0 0 0 50 0 0 0 0 0 0 84 E2 3F 92 0 0 FC 0 1C FF F2 3F FF F4 5F FF F6 7F FF 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 84 4 0 84 84 0 0 0 0 80 80 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 12 20 20 14 22 30 C 0 0 0 0 0 0 0 0 0 0 0 40 0 0 0 0 0 10 0 0 0 0 0 0 0 0 20 0 1 0 2 0 23 FA 11 0 13 1 1 42 0 13 2 10 0 13 1 3 42 0 13 4 0 0 2 0 1 0 0 2 0 1 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 A5</nvmData>
@@ -356,7 +356,7 @@ or 1 ms pulse length</textLabel>
         <EEPROM id="78">
             <data>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</data>
             <item id="78" caption="EEPROM">
-                <graphics pos="(-326.54,180.12)" angle="0" flipping="0" hidden="0" tOrigin="(30.00,16.00)"/>
+                <graphics pos="(-462.23,194.25)" angle="0" flipping="0" hidden="0" tOrigin="(30.00,16.00)"/>
             </item>
         </EEPROM>
         <wire output="147" input="111" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="0" wireText="NET0" wireState="0">

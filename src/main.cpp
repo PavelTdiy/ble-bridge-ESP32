@@ -30,6 +30,9 @@
 // lib to control micro-servos using angle references
 #include "Servo.h"
 
+//lib with my helping utilities
+#include "utils.h"
+
 // config i2c pins
 #define I2C_SCL 18
 #define I2C_SDA 19
@@ -62,6 +65,9 @@ Silego silego(0x08, I2C_SDA, I2C_SCL);
 
 //Create an instance of Servo class
 Servo myServo(4);
+
+//Create an instance of Utils class
+Utils utils(1);
 
 
 #ifndef BleServerCallbacks_h
@@ -129,11 +135,14 @@ int readTemperature(int dsIndex)
   return DSsensors.getTempCByIndex(dsIndex);
 }
 
+
+// button hardware interrupt
 void IRAM_ATTR bint() {
   buttonWerePressed = true;
 }
 
-void connectedTask(void *parameter)
+// bluetooth FreeRTOS task
+void bleTask(void *parameter)
 {
   for (;;)
   {
@@ -168,23 +177,33 @@ void connectedTask(void *parameter)
       oldDeviceConnected = deviceConnected;
     }
 
-    if (buttonWerePressed) {
-      int rndm = rand() % 0x7f;
-      Serial.println("button pressed");
-      buttonWerePressed = false;
-      myServo.setDegServo(rndm, 0); // not string here
-      // myServo.setDegStrServo("73", 0);
-      digitalWrite(LED_BUILTIN, HIGH);
-      delay(100);
-      digitalWrite(LED_BUILTIN, LOW);
-    }
-
     vTaskDelay(10 / portTICK_PERIOD_MS); // Delay between loops to reset watchdog timer
   }
 
   vTaskDelete(NULL);
 }
 
+
+// FreeRTOS task for other peripherial
+void perifTask(void *parameter) {
+  for (;;)
+  {
+    if (buttonWerePressed) {
+      buttonWerePressed = false;
+      digitalWrite(LED_BUILTIN, HIGH);
+      Serial.println("button pressed");
+      utils.parseCommand("My first command");
+      myServo.setDegServo(rand() % 0x7f, 0); // not string here
+      // myServo.setDegStrServo("73", 0);
+    }
+  digitalWrite(LED_BUILTIN, LOW);
+  vTaskDelay(50 / portTICK_PERIOD_MS); // Delay between loops to reset watchdog timer
+  }
+  vTaskDelete(NULL);
+}
+
+
+// Arduino init function
 void setup()
 {
   Serial.begin(9600);
@@ -238,11 +257,15 @@ void setup()
   // Start the service
   pService->start();
 
-  xTaskCreate(connectedTask, "connectedTask", 5000, NULL, 1, NULL);
+  //start BLE loop - FreeRTOS task
+  xTaskCreate(bleTask, "BLE server task", 5000, NULL, 1, NULL);
+
+  //start peripherial loop - FreeRTOS task
+  xTaskCreate(perifTask, "Peripherial Task", 5000, NULL, 0, NULL);
 
   // Start advertising
   pServer->getAdvertising()->start();
-  printf("Waiting a client connection to notify...\n");
+  printf("Waiting a client connection...\n");
 };
 
 void loop()
