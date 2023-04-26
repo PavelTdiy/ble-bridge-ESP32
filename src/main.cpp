@@ -65,7 +65,7 @@ Silego silego(0x08, I2C_SDA, I2C_SCL);
 
 //Create an instance of Servo class
 // public: 
-Servo myServo(4);
+// Servo myServo(4);
 
 //Create an instance of Utils class
 Utils utils(1);
@@ -122,8 +122,7 @@ class CharacteristicCallbacks : public BLECharacteristicCallbacks
     {
       printf("Received Value: ");
       printf("%s\n", rxValue.c_str());
-      utils.parseCommand(rxValue);
-      // myServo.setDegStrServo(rxValue, 0);
+      utils.executeCommand(rxValue);
     }
   }
 };
@@ -190,8 +189,8 @@ void perifTask(void *parameter) {
   {
     if (buttonWerePressed) {
       Serial.println("button pressed");
-      utils.parseCommand("virtual: 85");
-      myServo.setDegServo(rand() % 0x7f, 0); // not string here
+      utils.executeCommand("servo: 85");
+      utils.executeCommand("virtual: 85");
       utils.blink();
       buttonWerePressed = false;
     }
@@ -213,7 +212,7 @@ void setup()
   // Start up the Dallas DS18B20 library
   DSsensors.begin();
   // set Servo to zero
-  myServo.setDegServo(0, 0);
+  // myServo.setDegServo(0, 0);
 
   // Create the BLE Device
   BLEDevice::init("Ble Bridge");

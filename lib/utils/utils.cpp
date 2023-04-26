@@ -35,7 +35,7 @@ void Utils::blink(){
   digitalWrite(LED_BUILTIN, LOW);
 }
 
-void Utils::parseCommand(string commandStr){
+void Utils::executeCommand(string commandStr){
   printf("%s\n", commandStr.c_str());
   std::string delim = ": ";
   std::size_t found = commandStr.find(delim);
@@ -47,11 +47,27 @@ void Utils::parseCommand(string commandStr){
     if (commandKey.compare("servo") == 0) {
       printf("Servo command detected - ");
       printf("%s\n", commandVal.c_str());
-      // myServo.setDegStrServo(rxValue, 0);
+      firstServo.setDegStrServo(commandVal, 0);
     }
     else if (commandKey.compare("virtual") == 0) {
       printf("Virtual OUTs change - ");
       printf("%s\n", commandVal.c_str());
+      GPAK.writeI2C(0x7A, strToInt(commandVal));
+    }
+    else if (commandKey.compare("reg") == 0) {
+      printf("Writing to register - ");
+      std::string comma = ",";
+      std::size_t pos = commandVal.find(comma);
+      if (pos!=std::string::npos){
+        std::string data = commandVal.substr(pos + 1);
+        std::string addr = commandVal.erase(pos, commandVal.length() - 1);
+        printf("%s\n", addr.c_str());
+        printf("%s\n", data.c_str());
+        GPAK.writeI2C(strToInt(addr), strToInt(data));
+      }
+      else {
+        printf("Wrong register data or address format");
+      }
     }
     else {
       printf("Absent command name");
