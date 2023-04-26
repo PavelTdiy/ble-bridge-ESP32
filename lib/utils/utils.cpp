@@ -41,21 +41,21 @@ void Utils::parseCommand(string commandStr){
   std::size_t found = commandStr.find(delim);
   if (found!=std::string::npos){
     std::string commandVal = commandStr.substr(found + delim.length());
-    printf("%s\n", commandVal.c_str());
     std::string commandKey = commandStr.erase(found, commandStr.length() - 1);
-    printf("%s\n", commandKey.c_str());
-    // if (commandKey.compare("servo") == 0) {
-    //   printf("Servo command detected - ");
-    //   printf("%s\n", commandVal.c_str());
-    //   // myServo.setDegStrServo(rxValue, 0);
-    // }
-    // else if (commandKey.compare("virtual") == 0) {
-    //   printf("Virtual OUTs change - ");
-    //   printf("%s\n", commandVal.c_str());
-    // }
-    // else {
-    //   printf("Absent command name");
-    // }
+    // printf("%s\n", commandVal.c_str());
+    // printf("%s\n", commandKey.c_str());
+    if (commandKey.compare("servo") == 0) {
+      printf("Servo command detected - ");
+      printf("%s\n", commandVal.c_str());
+      // myServo.setDegStrServo(rxValue, 0);
+    }
+    else if (commandKey.compare("virtual") == 0) {
+      printf("Virtual OUTs change - ");
+      printf("%s\n", commandVal.c_str());
+    }
+    else {
+      printf("Absent command name");
+    }
   }
   else {
     printf("Bad Command format");
