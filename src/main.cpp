@@ -158,8 +158,9 @@ void perifTask(void *parameter) {
   {
     if (buttonWerePressed) {
       Serial.println("button pressed");
-      utils.executeCommand("servo: 85");
-      utils.executeCommand("virtual: 85");
+      int random = rand() % 0x7f;
+      utils.executeCommand("servo: " + std::to_string(random));
+      utils.executeCommand("virtual: " + std::to_string(random));
       utils.blink();
       buttonWerePressed = false;
     }
