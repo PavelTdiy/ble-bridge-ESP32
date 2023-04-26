@@ -14,6 +14,8 @@
 //lib with my helping utilities
 #include "utils.h"
 
+using namespace std;
+
 #define BUTTON 32 //dont use IO02 - this is LED_BUILTIN
 
 // See the following for generating UUIDs:
@@ -85,7 +87,7 @@ class CharacteristicCallbacks : public BLECharacteristicCallbacks
 {
   void onWrite(BLECharacteristic *pCharacteristic)
   {
-    std::string rxValue = pCharacteristic->getValue();
+    string rxValue = pCharacteristic->getValue();
 
     if (rxValue.length() > 0)
     {
@@ -159,8 +161,8 @@ void perifTask(void *parameter) {
     if (buttonWerePressed) {
       Serial.println("button pressed");
       int random = rand() % 0x7f;
-      utils.executeCommand("servo: " + std::to_string(random));
-      utils.executeCommand("virtual: " + std::to_string(random));
+      utils.executeCommand("servo: " + to_string(random));
+      utils.executeCommand("virtual: " + to_string(random));
       utils.blink();
       buttonWerePressed = false;
     }
