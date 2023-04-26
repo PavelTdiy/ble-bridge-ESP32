@@ -64,6 +64,7 @@ uint8_t txValue = 0;
 Silego silego(0x08, I2C_SDA, I2C_SCL);
 
 //Create an instance of Servo class
+// public: 
 Servo myServo(4);
 
 //Create an instance of Utils class
@@ -121,7 +122,8 @@ class CharacteristicCallbacks : public BLECharacteristicCallbacks
     {
       printf("Received Value: ");
       printf("%s\n", rxValue.c_str());
-      myServo.setDegStrServo(rxValue, 0);
+      utils.parseCommand(rxValue);
+      // myServo.setDegStrServo(rxValue, 0);
     }
   }
 };
@@ -156,9 +158,7 @@ void bleTask(void *parameter)
         pTxCharacteristic->notify();
         txValue = readTemperature(0);
         Serial.println(txValue);
-        digitalWrite(LED_BUILTIN, HIGH);
-        delay(100);
-        digitalWrite(LED_BUILTIN, LOW);
+        utils.blink();
         previousMillis = currentMillis;
       }
     }
@@ -189,14 +189,12 @@ void perifTask(void *parameter) {
   for (;;)
   {
     if (buttonWerePressed) {
-      buttonWerePressed = false;
-      digitalWrite(LED_BUILTIN, HIGH);
       Serial.println("button pressed");
-      utils.parseCommand("My first command");
+      utils.parseCommand("virtual: 85");
       myServo.setDegServo(rand() % 0x7f, 0); // not string here
-      // myServo.setDegStrServo("73", 0);
+      utils.blink();
+      buttonWerePressed = false;
     }
-  digitalWrite(LED_BUILTIN, LOW);
   vTaskDelay(50 / portTICK_PERIOD_MS); // Delay between loops to reset watchdog timer
   }
   vTaskDelete(NULL);

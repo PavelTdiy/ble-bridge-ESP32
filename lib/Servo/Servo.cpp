@@ -32,6 +32,7 @@ void Servo::setDegServo(int deg, int joint) {
 }
 
 void Servo::setDegStrServo(std::string degStr, int joint){
+  //FIXME: use strToInt from utils
   setDegServo(strToInt(degStr), 0);
 }
 
