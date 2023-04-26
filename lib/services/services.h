@@ -11,19 +11,19 @@
 // lib to control micro-servos using angle references
 #include "Servo.h"
 
-#ifndef utils_h
-#define utils_h
+#ifndef services_h
+#define services_h
 
 
-class Utils {
+class Services {
   public:
     //class variables
     int Nruns;
     Silego GPAK{0x08, 19, 18};
-    Servo firstServo{1};
+    Servo servo{1};
 
     // constructor function
-    Utils(int exNumber);
+    Services(int exNumber);
     
     // convert string to int for servos
     int strToInt(std::string strVal);

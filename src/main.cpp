@@ -12,7 +12,7 @@
 #include <DallasTemperature.h>
 
 //lib with my helping utilities
-#include "utils.h"
+#include "services.h"
 
 using namespace std;
 
@@ -38,8 +38,8 @@ bool oldDeviceConnected = false;
 bool buttonWerePressed = false;
 uint8_t txValue = 0;
 
-//Create an instance of Utils class
-Utils utils(1);
+//Create an instance of program services class
+Services myServices(1);
 
 
 #ifndef BleServerCallbacks_h
@@ -93,7 +93,7 @@ class CharacteristicCallbacks : public BLECharacteristicCallbacks
     {
       printf("Received Value: ");
       printf("%s\n", rxValue.c_str());
-      utils.executeCommand(rxValue);
+      myServices.executeCommand(rxValue);
     }
   }
 };
@@ -123,12 +123,12 @@ void bleTask(void *parameter)
       unsigned long currentMillis = millis();
       if (currentMillis - previousMillis >= 3000)
       {
-        printf("Client notifying...\n");
+        printf("Client notifying - temperature\n");
         pTxCharacteristic->setValue(&txValue, 2);
         pTxCharacteristic->notify();
         txValue = readTemperature(0);
         Serial.println(txValue);
-        utils.blink();
+        myServices.blink();
         previousMillis = currentMillis;
       }
     }
@@ -161,9 +161,9 @@ void perifTask(void *parameter) {
     if (buttonWerePressed) {
       Serial.println("button pressed");
       int random = rand() % 0x7f;
-      utils.executeCommand("servo: " + to_string(random));
-      utils.executeCommand("virtual: " + to_string(random));
-      utils.blink();
+      myServices.executeCommand("servo: " + to_string(random));
+      myServices.executeCommand("virtual: " + to_string(random));
+      myServices.blink();
       buttonWerePressed = false;
     }
   vTaskDelay(50 / portTICK_PERIOD_MS); // Delay between loops to reset watchdog timer

@@ -1,18 +1,18 @@
 #include "Arduino.h"
-#include "utils.h"
+#include "services.h"
 #include <math.h>
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-Utils::Utils(int exNumber)
+Services::Services(int exNumber)
   : Nruns(0)
 {
     Nruns++;
 }
 
-int Utils::strToInt(std::string strVal) {
+int Services::strToInt(std::string strVal) {
   int n = 0;
   for (int i = strVal.size(); i --> 0;) {
     char c = strVal[i];
@@ -28,13 +28,13 @@ int Utils::strToInt(std::string strVal) {
   return n;
 }
 
-void Utils::blink(){
+void Services::blink(){
   digitalWrite(LED_BUILTIN, HIGH);
   delay(100);
   digitalWrite(LED_BUILTIN, LOW);
 }
 
-void Utils::executeCommand(string commandStr){
+void Services::executeCommand(string commandStr){
   printf("%s\n", commandStr.c_str());
   std::string delim = ": ";
   std::size_t found = commandStr.find(delim);
@@ -44,14 +44,14 @@ void Utils::executeCommand(string commandStr){
     if (commandKey.compare("servo") == 0) {
       printf("Servo command detected - ");
       printf("%s\n", commandVal.c_str());
-      firstServo.setDegStrServo(commandVal, 0);
+      servo.setDegStrServo(commandVal, 0);
     }
     else if (commandKey.compare("virtual") == 0) {
       printf("Virtual OUTs change - ");
       printf("%s\n", commandVal.c_str());
-      GPAK.writeI2C(0x7A, strToInt(commandVal));
+      GPAK.writeI2C(VIRTUAL_INPUTS, strToInt(commandVal));
     }
-    else if (commandKey.compare("reg") == 0) {
+    else if (commandKey.compare("regw") == 0) {
       printf("Writing to register - ");
       std::string comma = ",";
       std::size_t pos = commandVal.find(comma);
@@ -65,6 +65,12 @@ void Utils::executeCommand(string commandStr){
       else {
         printf("Wrong register data or address format");
       }
+    }
+    else if (commandKey.compare("regr") == 0) {
+      printf("Reading register - ");
+      printf("%s\n", commandVal.c_str());
+      uint8_t readedData = GPAK.readI2C(strToInt(commandVal));
+      printf("%s\n", to_string(readedData).c_str());
     }
     else {
       printf("Absent command name");

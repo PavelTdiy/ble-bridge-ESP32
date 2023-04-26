@@ -12,7 +12,7 @@ using namespace std;
 
 Servo::Servo(int Number)
   : MaxAngles {90, 90, 90, 90}//joint max angles
-  , AddressesServo {0xAF, 0xB3, 0xB8, 0xBC}// servo counter data addresses
+  , AddressesServo {CNT2_DATA, CNT3_DATA, CNT4_DATA, CNT5_DATA}// servo counter data addresses
   , Ndevices (Number)
   , adr(0x08)
 {
@@ -32,7 +32,7 @@ void Servo::setDegServo(int deg, int joint) {
 }
 
 void Servo::setDegStrServo(std::string degStr, int joint){
-  //FIXME: use strToInt from utils
+  //FIXME: use strToInt from services
   setDegServo(strToInt(degStr), 0);
 }
 
