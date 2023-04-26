@@ -1,7 +1,6 @@
 #include "Arduino.h"
 #include "utils.h"
 #include <math.h>
-// #include <String.h>
 #include <iostream>
 #include <string>
 
@@ -42,8 +41,6 @@ void Utils::executeCommand(string commandStr){
   if (found!=std::string::npos){
     std::string commandVal = commandStr.substr(found + delim.length());
     std::string commandKey = commandStr.erase(found, commandStr.length() - 1);
-    // printf("%s\n", commandVal.c_str());
-    // printf("%s\n", commandKey.c_str());
     if (commandKey.compare("servo") == 0) {
       printf("Servo command detected - ");
       printf("%s\n", commandVal.c_str());
@@ -77,12 +74,4 @@ void Utils::executeCommand(string commandStr){
     printf("Bad Command format");
   }
 //   return 0;
-}
-
-std::string Utils::split(std::string str, std::string del){
-//     // declaring temp string to store the curr "word" upto del
-  int end = str.find(del); 
-  std::string keyName = str.substr(end);
-  printf("%s\n", keyName);
-  return keyName;
 }

@@ -1,21 +1,9 @@
-// /*
-//     Video: https://www.youtube.com/watch?v=oCMOYS71NIU
-//     Sourse: https://github.com/h2zero/esp-nimble-cpp/blob/05ac9deaead7e05865fd7aaca5f9f8747d00a99a/examples/basic/BLE_uart/main/main.cpp
-
-//    The program of creating the BLE server is:
-//    1. Create a BLE Server
-//    2. Create a BLE Service
-//    3. Create a BLE Characteristic on the Service
-//    4. Create a BLE Descriptor on the characteristic
-//    5. Start the service.
-//    6. Start advertising.
-
-//    In this example rxValue is the data received (only accessible inside that function).
-//    And txValue is the data to be sent, in this example just a byte incremented every second.
-// */
+/*
+  Bluetooth ESP32 bridge to control GPAK through I2C
+*/
 
 #include <Arduino.h>
-#include <String.h>
+
 // lib for ble
 #include <NimBLEDevice.h>
 
@@ -23,19 +11,8 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-// include Renesas lib to control GPAK from I2C
-#include "Silego.h"
-#include "macros/SLG46826.h"    // Include macros for SLG46531
-
-// lib to control micro-servos using angle references
-#include "Servo.h"
-
 //lib with my helping utilities
 #include "utils.h"
-
-// config i2c pins
-#define I2C_SCL 18
-#define I2C_SDA 19
 
 #define BUTTON 32 //dont use IO02 - this is LED_BUILTIN
 
@@ -58,14 +35,6 @@ bool deviceConnected = false;
 bool oldDeviceConnected = false;
 bool buttonWerePressed = false;
 uint8_t txValue = 0;
-
-// Create an instance of Silego class called
-// "silego" with device address 0x08
-Silego silego(0x08, I2C_SDA, I2C_SCL);
-
-//Create an instance of Servo class
-// public: 
-// Servo myServo(4);
 
 //Create an instance of Utils class
 Utils utils(1);
@@ -204,15 +173,17 @@ void perifTask(void *parameter) {
 void setup()
 {
   Serial.begin(9600);
+
+  //onboard LED
   pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(BUTTON, INPUT_PULLUP); // ext button
-  attachInterrupt(BUTTON, bint, FALLING); // button interrupt
   digitalWrite(LED_BUILTIN, LOW);
+  
+  // ext button
+  pinMode(BUTTON, INPUT_PULLUP); 
+  attachInterrupt(BUTTON, bint, FALLING); // button interrupt
 
   // Start up the Dallas DS18B20 library
   DSsensors.begin();
-  // set Servo to zero
-  // myServo.setDegServo(0, 0);
 
   // Create the BLE Device
   BLEDevice::init("Ble Bridge");

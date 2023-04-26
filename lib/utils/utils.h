@@ -34,9 +34,6 @@ class Utils {
     //parse command from client to channel and values
     void executeCommand(std::string commandStr);
 
-    //split string
-    std::string split(std::string str, std::string del);
-
 };
 
 #endif
