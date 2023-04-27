@@ -33,6 +33,7 @@ DallasTemperature DSsensors(&oneWire);
 // ble variables
 BLEServer *pServer = NULL;
 BLECharacteristic *pTxCharacteristic;
+BLECharacteristic *pReadedReg;
 bool deviceConnected = false;
 bool oldDeviceConnected = false;
 bool buttonWerePressed = false;
@@ -162,7 +163,11 @@ void perifTask(void *parameter) {
       Serial.println("******* Button pressed");
       int random = rand();
       myServices.executeCommand("servo: " + to_string(random % 0x7f));
-      myServices.executeCommand("virtual: " + to_string(random % 0xff));
+      // myServices.executeCommand("virtual: " + to_string(random % 0xff));
+      txValue = myServices.executeCommand("regr: " + to_string(VIRTUAL_INPUTS));
+      printf("%s\n", to_string(txValue).c_str());
+      pTxCharacteristic->setValue(&txValue, 2);
+      pTxCharacteristic->notify();
       myServices.blink();
       buttonWerePressed = false;
     }

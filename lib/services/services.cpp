@@ -34,8 +34,9 @@ void Services::blink(){
   digitalWrite(LED_BUILTIN, LOW);
 }
 
-void Services::executeCommand(string commandStr){
+uint8_t Services::executeCommand(string commandStr){
   // printf("%s\n", commandStr.c_str());
+  uint8_t commandAnswer = 0;
   std::string delim = ": ";
   std::size_t found = commandStr.find(delim);
   if (found!=std::string::npos){
@@ -67,10 +68,10 @@ void Services::executeCommand(string commandStr){
       }
     }
     else if (commandKey.compare("regr") == 0) {
-      printf("Reading register - ");
+      printf("Reading register &");
       printf("%s\n", commandVal.c_str());
       uint8_t readedData = GPAK.readI2C(strToInt(commandVal));
-      printf("%s\n", to_string(readedData).c_str());
+      commandAnswer = readedData;
     }
     else {
       printf("Absent command name");
@@ -79,5 +80,5 @@ void Services::executeCommand(string commandStr){
   else {
     printf("Bad Command format");
   }
-//   return 0;
+  return commandAnswer;
 }

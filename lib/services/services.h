@@ -33,7 +33,7 @@ class Services {
     void blink();
 
     //parse command from client to channel and values
-    void executeCommand(std::string commandStr);
+    uint8_t executeCommand(std::string commandStr);
 
 };
 

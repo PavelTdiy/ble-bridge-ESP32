@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GPDProject version="26" oldestCompatibleVersion="26" GPDVersion="6.35.003" lastChange="27.04.2023 12:51" projectChecksumState="1" projectChecksum="ee2ad110">
+<GPDProject version="26" oldestCompatibleVersion="26" GPDVersion="6.35.003" lastChange="27.04.2023 17:15" projectChecksumState="1" projectChecksum="f39c1b52">
     <generalProjectSettings/>
     <chip family="04" type="06" friendlyName="GreenPAK 6" partNumber="36" package="16">
-        <nvmData registerLenght="2048">0 0 0 0 0 0 7D 21 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 12 0 74 0 D0 1 40 7 0 1D 0 0 0 0 0 0 50 0 0 0 0 0 0 84 E2 3F 92 0 70 FF 30 1C FF F2 3F FF F4 5F FF F6 7F FF 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 84 4 0 84 84 0 0 0 0 80 80 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 12 20 20 14 22 30 C 0 0 0 0 0 0 0 0 0 0 0 40 0 0 0 0 0 10 0 0 0 0 0 0 0 0 20 0 1 0 2 0 23 FA 11 0 13 1 1 42 0 13 2 10 0 13 1 3 42 0 13 4 0 0 2 0 1 0 0 2 0 1 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 A5</nvmData>
+        <nvmData registerLenght="2048">0 0 0 0 0 0 7D 21 1 0 0 0 0 0 0 0 0 0 0 E0 17 1D 0 0 0 0 0 12 0 74 0 D0 1 40 7 0 1D 0 0 0 0 0 0 50 0 0 0 0 0 0 84 E2 3F 92 0 A0 FD 0 1C FF F2 3F FF F4 5F FF F6 7F FF 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 84 4 0 84 84 0 0 0 0 80 80 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 12 20 20 14 22 30 C 0 0 0 0 0 0 0 0 0 0 0 40 0 0 0 0 0 10 0 78 6 0 0 0 0 0 20 0 1 0 2 0 23 FA 11 0 13 1 1 42 0 13 2 10 0 13 1 3 42 0 13 4 0 0 2 0 1 0 0 2 0 1 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 A5</nvmData>
         <eepromData id="0">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</eepromData>
-        <checksum crc32="0xD590788" version="7"/>
+        <checksum crc32="0x20911A66" version="7"/>
         <VDDItem id="0">
             <item id="0" caption="VDD (PIN 20)">
                 <graphics pos="(159.40,-23.36)" angle="0" flipping="1" hidden="0" tOrigin="(20.00,10.00)"/>
@@ -43,7 +43,7 @@
         <IOPad id="6" useCaseMode="2">
             <item id="6" caption="PIN 14 (IO5)">
                 <graphics pos="(159.40,581.39)" angle="0" flipping="1" hidden="0" tOrigin="(20.00,10.00)"/>
-                <textLabel pos="(8.50,-27.00)" angle="0.00" textColor="#ffff00ff" backgroundColor="#14141464">NC</textLabel>
+                <textLabel pos="(1.00,-27.00)" angle="0.00" textColor="#ffff00ff" backgroundColor="#14141464">TEST1</textLabel>
             </item>
         </IOPad>
         <IOPad id="7" useCaseMode="1">
@@ -61,7 +61,7 @@
         <IOPad id="9" useCaseMode="2">
             <item id="9" caption="PIN 11 (IO6)">
                 <graphics pos="(159.40,851.39)" angle="0" flipping="3" hidden="0" tOrigin="(20.00,10.00)"/>
-                <textLabel pos="(8.50,-27.00)" angle="0.00" textColor="#ffff00ff" backgroundColor="#14141464">NC</textLabel>
+                <textLabel pos="(1.00,-27.00)" angle="0.00" textColor="#ffff00ff" backgroundColor="#14141464">TEST2</textLabel>
             </item>
         </IOPad>
         <item id="10" caption="GND (PIN 10)">
@@ -142,7 +142,7 @@
             <graphics pos="(320.00,190.00)" angle="0" flipping="0" hidden="1" tOrigin="(17.50,10.00)"/>
         </item>
         <item id="27" caption="POR">
-            <graphics pos="(-477.95,26.64)" angle="0" flipping="0" hidden="1" tOrigin="(17.50,10.00)"/>
+            <graphics pos="(-298.55,-23.59)" angle="0" flipping="0" hidden="0" tOrigin="(17.50,10.00)"/>
         </item>
         <item id="28" caption="OSC0">
             <graphics pos="(-462.50,86.25)" angle="0" flipping="0" hidden="0" tOrigin="(30.00,40.00)"/>
@@ -214,11 +214,9 @@
                 <graphics pos="(210.00,370.00)" angle="90" flipping="0" hidden="1" tOrigin="(20.00,15.00)"/>
             </item>
         </LUT>
-        <LUT id="45" regularShape="0" mode="0">
-            <item id="45" caption="3-bit LUT6/Pipe Delay/Ripple Counter">
-                <graphics pos="(210.00,430.00)" angle="90" flipping="0" hidden="1" tOrigin="(20.00,15.00)"/>
-            </item>
-        </LUT>
+        <item id="45" caption="3-bit LUT6/Pipe Delay/Ripple Counter">
+            <graphics pos="(-20.24,555.36)" angle="0" flipping="0" hidden="0" tOrigin="(23.00,18.00)"/>
+        </item>
         <item id="46" caption="MF0 (4-bit LUT0, DFF/LATCH9, WS Ctrl, 16-bit CNT0/DLY0/FSM0)">
             <graphics pos="(-500.00,-20.00)" angle="0" flipping="0" hidden="1" tOrigin="(155.00,60.00)"/>
         </item>
@@ -470,11 +468,17 @@ or 1 ms pulse length</textLabel>
         <wire output="0" input="509" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="-1" wireText="VDD" wireState="1">
             <points/>
         </wire>
-        <wire output="56" input="508" autoRouting="1" pen="#00ff00ff;1.00;1;32;128" lineType="1" protected="0" CWLid="7" wireText="NET7" wireState="0">
-            <points>(-23.00,701.00); (-40.00,701.00); (-40.00,587.00); (136.00,587.00)</points>
+        <wire output="39" input="566" autoRouting="1" pen="#00ff00ff;1.00;1;32;128" lineType="1" protected="0" CWLid="-1" wireText="POR" wireState="1">
+            <points/>
         </wire>
-        <wire output="63" input="515" autoRouting="1" pen="#00ff00ff;1.00;1;32;128" lineType="1" protected="0" CWLid="14" wireText="NET14" wireState="0">
-            <points>(-23.00,772.00); (-40.00,772.00); (-40.00,862.00); (136.00,862.00)</points>
+        <wire output="194" input="568" autoRouting="1" pen="#00ff00ff;1.00;1;32;128" lineType="1" protected="0" CWLid="16" wireText="NET16" wireState="0">
+            <points>(-86.00,89.00); (-64.00,89.00); (-64.00,587.00); (-41.00,587.00)</points>
+        </wire>
+        <wire output="169" input="508" autoRouting="1" pen="#00ff00ff;1.00;1;32;128" lineType="1" protected="0" CWLid="21" wireText="NET21" wireState="0">
+            <points>(46.00,587.00); (136.00,587.00)</points>
+        </wire>
+        <wire output="145" input="567" autoRouting="1" pen="#00ff00ff;1.00;1;32;128" lineType="1" protected="0" CWLid="15" wireText="EN" wireState="1">
+            <points/>
         </wire>
         <textLabel pos="(0.90,-29.26)" angle="0.00" textColor="#ffff00ff" backgroundColor="#14141464">    1 - min angle
 255 - max angle</textLabel>
@@ -502,7 +506,7 @@ or 1 ms pulse length</textLabel>
                 <SaveEmulator Name="PU for VI">
                     <PowerOptions synced="0"/>
                     <PowerSwitch internalPower="1" externalPower="0"/>
-                    <ExpansionConnector>1:0;2:1;3:0;4:0;5:0;6:0;7:0;8:1;9:1;10:0;11:0;12:0;13:0;14:0;15:0;16:0;17:0;18:0;19:0;20:0</ExpansionConnector>
+                    <ExpansionConnector>1:0;2:1;3:0;4:0;5:0;6:0;7:1;8:0;9:0;10:0;11:0;12:0;13:0;14:0;15:0;16:0;17:0;18:0;19:0;20:0</ExpansionConnector>
                     <TestPoints>
                         <TPC ID="1" Type="8">
                             <BaseOption LEDEnable="0" LEDInvertion="0" HotKey="81" GlobalLink="0"/>
