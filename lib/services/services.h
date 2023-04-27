@@ -20,7 +20,7 @@ class Services {
     //class variables
     int Nruns;
     Silego GPAK{0x08, 19, 18};
-    // Silego HVPAK{0x10, 19, 18};
+    Silego HVPAK{0x10, 19, 18};
     Servo servo{1};
 
     // constructor function

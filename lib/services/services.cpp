@@ -52,6 +52,14 @@ uint8_t Services::executeCommand(string commandStr){
       printf("%s\n", commandVal.c_str());
       GPAK.writeI2C(VIRTUAL_INPUTS, strToInt(commandVal));
     }
+    else if (commandKey.compare("pwm") == 0) {
+      printf("Changing PWM0 duty at HVPAK to ");
+      printf("%s\n", commandVal.c_str());
+      //writing initial duty
+      HVPAK.writeI2C(0xA1, strToInt(commandVal));
+      //updating duty bit
+      HVPAK.writeI2C(0xA2, true, 0);
+    }
     else if (commandKey.compare("regw") == 0) {
       printf("Writing to register - ");
       std::string comma = ",";
