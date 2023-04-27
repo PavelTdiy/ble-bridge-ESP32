@@ -91,8 +91,8 @@ class CharacteristicCallbacks : public BLECharacteristicCallbacks
 
     if (rxValue.length() > 0)
     {
-      printf("Received Value: ");
-      printf("%s\n", rxValue.c_str());
+      printf("******* Received Value from BLE: ");
+      // printf("%s\n", rxValue.c_str());
       myServices.executeCommand(rxValue);
     }
   }
@@ -121,9 +121,9 @@ void bleTask(void *parameter)
     if (deviceConnected)
     {
       unsigned long currentMillis = millis();
-      if (currentMillis - previousMillis >= 3000)
+      if (currentMillis - previousMillis >= 10000)
       {
-        printf("Client notifying - temperature\n");
+        printf("******* Client notifying - temperature\n");
         pTxCharacteristic->setValue(&txValue, 2);
         pTxCharacteristic->notify();
         txValue = readTemperature(0);
@@ -159,10 +159,10 @@ void perifTask(void *parameter) {
   for (;;)
   {
     if (buttonWerePressed) {
-      Serial.println("button pressed");
-      int random = rand() % 0x7f;
-      myServices.executeCommand("servo: " + to_string(random));
-      myServices.executeCommand("virtual: " + to_string(random));
+      Serial.println("******* Button pressed");
+      int random = rand();
+      myServices.executeCommand("servo: " + to_string(random % 0x7f));
+      myServices.executeCommand("virtual: " + to_string(random % 0xff));
       myServices.blink();
       buttonWerePressed = false;
     }

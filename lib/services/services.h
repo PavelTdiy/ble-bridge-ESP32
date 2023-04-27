@@ -6,7 +6,7 @@
 
 // if not used before - include Renesas lib to control GPAK from I2C
 #include "Silego.h"
-#include "macros/SLG46826.h"    // Include macros for SLG46531
+#include "macros/SLG46826.h"    // Include macros for SLG46826
 
 // lib to control micro-servos using angle references
 #include "Servo.h"
@@ -20,6 +20,7 @@ class Services {
     //class variables
     int Nruns;
     Silego GPAK{0x08, 19, 18};
+    // Silego HVPAK{0x10, 19, 18};
     Servo servo{1};
 
     // constructor function

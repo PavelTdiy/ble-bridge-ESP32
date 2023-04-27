@@ -35,7 +35,7 @@ void Services::blink(){
 }
 
 void Services::executeCommand(string commandStr){
-  printf("%s\n", commandStr.c_str());
+  // printf("%s\n", commandStr.c_str());
   std::string delim = ": ";
   std::size_t found = commandStr.find(delim);
   if (found!=std::string::npos){
