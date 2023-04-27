@@ -45,7 +45,7 @@
 #define ACMP3L_VREF_MASK        0xFC	// ACMP3 Reference Voltage Bit mask (2-7)
 
 //Ripple counter bits
-#define RIPPLE_BYTE	 			0xFC	// Ripple counter reg
+#define RIPPLE_BYTE	 			0x9C	// Ripple counter reg
 #define RIPPLE_NSET_MASK		0x07	// Ripple counter nSET value mask (0-2)
 #define RIPPLE_END_MASK			0x38	// Ripple counter nSET value mask (3-5)
 #define RIPPLE_MODE_BIT			6   	// Ripple counter mode select bit

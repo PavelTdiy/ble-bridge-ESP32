@@ -81,6 +81,11 @@ uint8_t Services::executeCommand(string commandStr){
       uint8_t readedData = GPAK.readI2C(strToInt(commandVal));
       commandAnswer = readedData;
     }
+    else if (commandKey.compare("ripple") == 0) {
+      printf("Writing ripple current END value");
+      printf("%s\n", commandVal.c_str());
+      GPAK.writeI2C(RIPPLE_BYTE, strToInt(commandVal), RIPPLE_MODE_BIT_MASK, 3);
+    }
     else {
       printf("Absent command name");
     }
