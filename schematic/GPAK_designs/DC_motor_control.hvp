@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GPDProject version="26" oldestCompatibleVersion="26" GPDVersion="6.35.003" lastChange="27.04.2023 18:58" projectChecksumState="1" projectChecksum="de5e1593">
+<GPDProject version="26" oldestCompatibleVersion="26" GPDVersion="6.35.003" lastChange="28.04.2023 10:11" projectChecksumState="1" projectChecksum="f5d12938">
     <generalProjectSettings/>
     <chip family="04" type="06" friendlyName="HVPAK1" partNumber="45" package="7">
-        <nvmData registerLenght="2048">0 0 0 0 0 0 0 0 0 68 1E 0 0 0 0 0 0 8 C2 FF 73 1 0 68 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 39 B0 1 2 0 0 C0 F 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 80 61 0 43 3 3 3 0 30 40 0 30 30 30 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 40 30 0 0 0 A 0 0 0 0 8 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 FF 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5A 0 0 1 0 0 2 2 A5</nvmData>
-        <checksum crc32="0xBFE51BAF" version="1"/>
+        <nvmData registerLenght="2048">0 0 0 0 30 FC 0 0 0 68 1E 0 0 0 0 0 0 8 C2 FF 73 1 0 68 82 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 39 B0 1 2 0 0 C0 F 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 80 61 0 43 3 3 3 0 30 40 0 0 30 30 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 40 35 0 0 0 40 0 0 0 0 8 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 FF 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5A 0 0 1 0 0 2 2 A5</nvmData>
+        <checksum crc32="0x1C2D0EF6" version="1"/>
         <VDDItem id="0">
             <item id="0" caption="VDD (PIN 1)">
                 <graphics pos="(124.94,127.38)" angle="0" flipping="0" hidden="0" tOrigin="(20.00,10.00)"/>
@@ -87,9 +87,10 @@
                 <textLabel pos="(5.00,-29.00)" angle="0.00" textColor="#ffff00ff" backgroundColor="#14141464">SDA</textLabel>
             </item>
         </IOPad>
-        <IOPad id="16" useCaseMode="0">
+        <IOPad id="16" useCaseMode="2">
             <item id="16" caption="PIN 17 (GPIO4)">
-                <graphics pos="(873.64,71.55)" angle="0" flipping="1" hidden="1" tOrigin="(20.00,10.00)"/>
+                <graphics pos="(872.38,92.93)" angle="0" flipping="1" hidden="0" tOrigin="(20.00,10.00)"/>
+                <textLabel pos="(4.50,-27.00)" angle="0.00" textColor="#ffff00ff" backgroundColor="#14141464">RUN</textLabel>
             </item>
         </IOPad>
         <item id="17" caption="GND (PIN 18)">
@@ -121,9 +122,9 @@
         <item id="24" caption="2-bit LUT1/DFF/LATCH1">
             <graphics pos="(261.79,279.43)" angle="0" flipping="0" hidden="0" tOrigin="(25.00,10.00)"/>
         </item>
-        <LUT id="25" regularShape="0" mode="0">
+        <LUT id="25" regularShape="0" mode="2">
             <item id="25" caption="2-bit LUT2/DFF/LATCH2">
-                <graphics pos="(-210.63,134.17)" angle="90" flipping="0" hidden="1" tOrigin="(20.00,15.00)"/>
+                <graphics pos="(754.18,82.92)" angle="90" flipping="0" hidden="0" tOrigin="(20.00,15.00)"/>
             </item>
         </LUT>
         <LUT id="26" regularShape="0" mode="0">
@@ -377,6 +378,15 @@
         </wire>
         <wire output="39" input="806" autoRouting="1" pen="#00ff00ff;1.00;1;32;128" lineType="1" protected="0" CWLid="-1" wireText="POR" wireState="1">
             <points/>
+        </wire>
+        <wire output="0" input="767" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="-1" wireText="VDD" wireState="1">
+            <points/>
+        </wire>
+        <wire output="158" input="544" autoRouting="1" pen="#00ff00ff;1.00;1;32;128" lineType="1" protected="0" CWLid="19" wireText="sleep" wireState="1">
+            <points/>
+        </wire>
+        <wire output="159" input="766" autoRouting="1" pen="#00ff00ff;1.00;1;32;128" lineType="1" protected="0" CWLid="14" wireText="NET14" wireState="0">
+            <points>(813.00,98.00); (849.00,98.00)</points>
         </wire>
     </chip>
     <emulatorConfiguration version="4" oldestCompatibleVersion="4">
@@ -685,7 +695,7 @@
                             <ButtonSettings UpSide="1" DownSide="0" LatchMode="0" DefaultConnection="1" ConnectedSide="1"/>
                         </TPC>
                         <TPC ID="18" Type="1">
-                            <BaseOption LEDEnable="0" LEDInvertion="0" HotKey="75" GlobalLink="1"/>
+                            <BaseOption LEDEnable="1" LEDInvertion="0" HotKey="75" GlobalLink="1"/>
                         </TPC>
                     </TestPoints>
                     <I2C slaveAddress="-1"/>

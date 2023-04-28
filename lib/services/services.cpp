@@ -45,7 +45,16 @@ uint8_t Services::executeCommand(string commandStr){
     if (commandKey.compare("servo") == 0) {
       printf("Servo command detected - ");
       printf("%s\n", commandVal.c_str());
-      servo.setDegStrServo(commandVal, 0);
+      std::string comma = ",";
+      std::size_t pos = commandVal.find(comma);
+      if (pos!=std::string::npos){
+        std::string ang = commandVal.substr(pos + 1);
+        std::string joint = commandVal.erase(pos, commandVal.length() - 1);
+        servo.setDegStrServo(ang, strToInt(joint));
+      }
+      else {
+        printf("Wrong servo joint data");
+      }
     }
     else if (commandKey.compare("virtual") == 0) {
       printf("Virtual OUTs change - ");

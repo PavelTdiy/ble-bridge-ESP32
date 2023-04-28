@@ -162,7 +162,7 @@ void perifTask(void *parameter) {
     if (buttonWerePressed) {
       Serial.println("******* Button pressed");
       int random = rand();
-      myServices.executeCommand("servo: " + to_string(random % 0x7f));
+      myServices.executeCommand("servo: 0," + to_string(random % 0x7f));
       // myServices.executeCommand("virtual: " + to_string(random % 0xff));
       txValue = myServices.executeCommand("regr: " + to_string(VIRTUAL_INPUTS));
       printf("%s\n", to_string(txValue).c_str());
