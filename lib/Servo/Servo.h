@@ -28,6 +28,9 @@ class Servo {
         // Set joints servo to given angle in string
 		void setDegStrServo(std::string degStr, int joint);
 
+        // convert string to int for servos
+        int strToInt(std::string strVal);
+
         // Set joints in given positions
 		void setPosition(int angles[10]);
 };

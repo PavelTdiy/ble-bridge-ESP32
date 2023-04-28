@@ -1,21 +1,9 @@
-// /*
-//     Video: https://www.youtube.com/watch?v=oCMOYS71NIU
-//     Sourse: https://github.com/h2zero/esp-nimble-cpp/blob/05ac9deaead7e05865fd7aaca5f9f8747d00a99a/examples/basic/BLE_uart/main/main.cpp
-
-//    The program of creating the BLE server is:
-//    1. Create a BLE Server
-//    2. Create a BLE Service
-//    3. Create a BLE Characteristic on the Service
-//    4. Create a BLE Descriptor on the characteristic
-//    5. Start the service.
-//    6. Start advertising.
-
-//    In this example rxValue is the data received (only accessible inside that function).
-//    And txValue is the data to be sent, in this example just a byte incremented every second.
-// */
+/*
+  Bluetooth ESP32 bridge to control GPAK through I2C
+*/
 
 #include <Arduino.h>
-#include <String.h>
+
 // lib for ble
 #include <NimBLEDevice.h>
 
@@ -23,16 +11,10 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-// include Renesas lib to control GPAK from I2C
-#include "Silego.h"
-#include "macros/SLG46826.h"    // Include macros for SLG46531
+//lib with my helping utilities
+#include "services.h"
 
-// lib to control micro-servos using angle references
-#include "Servo.h"
-
-// config i2c pins
-#define I2C_SCL 18
-#define I2C_SDA 19
+using namespace std;
 
 #define BUTTON 32 //dont use IO02 - this is LED_BUILTIN
 
@@ -51,17 +33,14 @@ DallasTemperature DSsensors(&oneWire);
 // ble variables
 BLEServer *pServer = NULL;
 BLECharacteristic *pTxCharacteristic;
+BLECharacteristic *pReadedReg;
 bool deviceConnected = false;
 bool oldDeviceConnected = false;
 bool buttonWerePressed = false;
 uint8_t txValue = 0;
 
-// Create an instance of Silego class called
-// "silego" with device address 0x08
-Silego silego(0x08, I2C_SDA, I2C_SCL);
-
-//Create an instance of Servo class
-Servo myServo(4);
+//Create an instance of program services class
+Services myServices(1);
 
 
 #ifndef BleServerCallbacks_h
@@ -109,43 +88,14 @@ class CharacteristicCallbacks : public BLECharacteristicCallbacks
 {
   void onWrite(BLECharacteristic *pCharacteristic)
   {
-    std::string rxValue = pCharacteristic->getValue();
+    string rxValue = pCharacteristic->getValue();
 
     if (rxValue.length() > 0)
     {
-      printf("Received Value: ");
-      printf("%s\n", rxValue.c_str());
-      // int numVal = 77;//strToInt("rxValue");
-
-      // int n = 0;
-      // for (int i = 0; i < 2; i++) {
-      //   char c = rxValue[i];
-      //   if (c >= 48 && c <= 57) {
-      //     n = i * 10 + (c - 48);
-      //   }
-      //   else {
-      //       printf("Bad Input");
-      //   }
-      // }
-      myServo.setDegStrServo(rxValue, 0);
+      printf("******* Received Value from BLE: ");
+      // printf("%s\n", rxValue.c_str());
+      myServices.executeCommand(rxValue);
     }
-  }
-  int strToInt(std::string str){
-    int i = 0;
-    // for (char c : str) {
-    //     printf("%s\n", i);
-    //     printf("%s\n", c);
-    //     // Checking if the element is number
-    //     if (c >= 48 && c <= 57) {
-    //         //i = i * 10 + (c - 48);
-    //     }
-    //     Otherwise print bad output
-    //     else {
-    //         printf("Bad Input");
-    //         return 1;
-    //     }
-    // }
-    return 11;
   }
 };
 
@@ -158,27 +108,28 @@ int readTemperature(int dsIndex)
   return DSsensors.getTempCByIndex(dsIndex);
 }
 
+
+// button hardware interrupt
 void IRAM_ATTR bint() {
   buttonWerePressed = true;
 }
 
-void connectedTask(void *parameter)
+// bluetooth FreeRTOS task
+void bleTask(void *parameter)
 {
   for (;;)
   {
     if (deviceConnected)
     {
       unsigned long currentMillis = millis();
-      if (currentMillis - previousMillis >= 3000)
+      if (currentMillis - previousMillis >= 10000)
       {
-        printf("Client notifying...\n");
+        printf("******* Client notifying - temperature\n");
         pTxCharacteristic->setValue(&txValue, 2);
         pTxCharacteristic->notify();
         txValue = readTemperature(0);
         Serial.println(txValue);
-        digitalWrite(LED_BUILTIN, HIGH);
-        delay(100);
-        digitalWrite(LED_BUILTIN, LOW);
+        myServices.blink();
         previousMillis = currentMillis;
       }
     }
@@ -197,32 +148,50 @@ void connectedTask(void *parameter)
       oldDeviceConnected = deviceConnected;
     }
 
-    if (buttonWerePressed) {
-      Serial.println("button pressed");
-      buttonWerePressed = false;
-      myServo.setDegStrServo("73", 0);
-      digitalWrite(LED_BUILTIN, HIGH);
-      delay(100);
-      digitalWrite(LED_BUILTIN, LOW);
-    }
-
     vTaskDelay(10 / portTICK_PERIOD_MS); // Delay between loops to reset watchdog timer
   }
 
   vTaskDelete(NULL);
 }
 
+
+// FreeRTOS task for other peripherial
+void perifTask(void *parameter) {
+  for (;;)
+  {
+    if (buttonWerePressed) {
+      Serial.println("******* Button pressed");
+      int random = rand();
+      myServices.executeCommand("servo: 0," + to_string(random % 0x7f));
+      // myServices.executeCommand("virtual: " + to_string(random % 0xff));
+      txValue = myServices.executeCommand("regr: " + to_string(VIRTUAL_INPUTS));
+      printf("%s\n", to_string(txValue).c_str());
+      pTxCharacteristic->setValue(&txValue, 2);
+      pTxCharacteristic->notify();
+      myServices.blink();
+      buttonWerePressed = false;
+    }
+  vTaskDelay(50 / portTICK_PERIOD_MS); // Delay between loops to reset watchdog timer
+  }
+  vTaskDelete(NULL);
+}
+
+
+// Arduino init function
 void setup()
 {
   Serial.begin(9600);
+
+  //onboard LED
   pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(BUTTON, INPUT_PULLUP); // ext button
-  attachInterrupt(BUTTON, bint, FALLING); // button interrupt
   digitalWrite(LED_BUILTIN, LOW);
+  
+  // ext button
+  pinMode(BUTTON, INPUT_PULLUP); 
+  attachInterrupt(BUTTON, bint, FALLING); // button interrupt
+
   // Start up the Dallas DS18B20 library
   DSsensors.begin();
-  // set Servo to zero
-  myServo.setDegServo(0, 0);
 
   // Create the BLE Device
   BLEDevice::init("Ble Bridge");
@@ -264,11 +233,15 @@ void setup()
   // Start the service
   pService->start();
 
-  xTaskCreate(connectedTask, "connectedTask", 5000, NULL, 1, NULL);
+  //start BLE loop - FreeRTOS task
+  xTaskCreate(bleTask, "BLE server task", 5000, NULL, 1, NULL);
+
+  //start peripherial loop - FreeRTOS task
+  xTaskCreate(perifTask, "Peripherial Task", 5000, NULL, 0, NULL);
 
   // Start advertising
   pServer->getAdvertising()->start();
-  printf("Waiting a client connection to notify...\n");
+  printf("Waiting a client connection...\n");
 };
 
 void loop()

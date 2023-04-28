@@ -23,6 +23,81 @@
 #define CNT2_VAL				0x7E	// Counted value for CNT2
 #define CNT4_VAL				0x7F	// Counted value for CNT4
 
+// Analog comparators outputs
+#define ACMP_OUT_BYTE			0x7B	// ACMP Output Byte Address
+#define ACMP0H_OUT_BIT			0   	// ACMP0 Output Bit
+#define ACMP0H_OUT_BIT_MASK		0x01	// ACMP0 Output Bit mask
+#define ACMP1H_OUT_BIT			1   	// ACMP1 Output Bit
+#define ACMP1H_OUT_BIT_MASK     0x02	// ACMP1 Output Bit mask
+#define ACMP2L_OUT_BIT			2   	// ACMP2 Output Bit
+#define ACMP2L_OUT_BIT_MASK     0x04	// ACMP2 Output Bit mask
+#define ACMP3L_OUT_BIT			3   	// ACMP3 Output Bit
+#define ACMP3L_OUT_BIT_MASK     0x08	// ACMP3 Output Bit mask
+
+// Analog comparators refs
+#define ACMP0H_VREF_BYTE        0x89	// ACMP0 Reference Voltage Address
+#define ACMP0H_VREF_MASK        0xFC	// ACMP0 Reference Voltage Bit mask (2-7)
+#define ACMP1H_VREF_BYTE		0x8A	// ACMP1 Reference Voltage Address
+#define ACMP1H_VREF_MASK        0xFC	// ACMP1 Reference Voltage Bit mask (2-7)
+#define ACMP2L_VREF_BYTE        0x8B	// ACMP2 Reference Voltage Address
+#define ACMP2L_VREF_MASK        0xFC	// ACMP2 Reference Voltage Bit mask (2-7)
+#define ACMP3L_VREF_BYTE		0x8C	// ACMP3 Reference Voltage Address
+#define ACMP3L_VREF_MASK        0xFC	// ACMP3 Reference Voltage Bit mask (2-7)
+
+//Ripple counter bits
+#define RIPPLE_BYTE	 			0x9C	// Ripple counter reg
+#define RIPPLE_NSET_MASK		0x07	// Ripple counter nSET value mask (0-2)
+#define RIPPLE_END_MASK			0x38	// Ripple counter nSET value mask (3-5)
+#define RIPPLE_MODE_BIT			6   	// Ripple counter mode select bit
+#define RIPPLE_MODE_BIT_MASK	0x40	// Ripple counter mode select mask
+
+// GPIO pins values - Matrix inputs
+#define PIN_1_BYTE				0x75	// PIN1 GPIO14 byte address
+#define	PIN_1_BIT				5       // PIN1 GPIO14 bit number within byte
+#define	PIN_1_BIT_MASK			0x20	// PIN1 GPIO14 bit mask
+#define PIN_2_BYTE				0x75	// PIN2 GPIO13 byte address
+#define	PIN_2_BIT				4       // PIN2 GPIO13 bit number within byte
+#define	PIN_2_BIT_MASK			0x10	// PIN2 GPIO13 bit mask
+#define PIN_3_BYTE				0x75	// PIN3 GPIO12 byte address
+#define	PIN_3_BIT				3       // PIN3 GPIO12 bit number within byte
+#define	PIN_3_BIT_MASK			0x08	// PIN3 GPIO12 bit mask
+#define PIN_4_BYTE				0x75	// PIN4 GPIO11 byte address
+#define	PIN_4_BIT				2       // PIN4 GPIO11 bit number within byte
+#define	PIN_4_BIT_MASK			0x04	// PIN4 GPIO11 bit mask
+#define PIN_5_BYTE				0x75	// PIN5 GPIO10 byte address
+#define	PIN_5_BIT				1       // PIN5 GPIO10 bit number within byte
+#define	PIN_5_BIT_MASK			0x02	// PIN5 GPIO10 bit mask
+#define PIN_6_BYTE				0x75	// PIN6 GPIO9 byte address
+#define	PIN_6_BIT				0       // PIN6 GPIO9 bit number within byte
+#define	PIN_6_BIT_MASK			0x01	// PIN6 GPIO9 bit mask
+// PIN7 - VDD2
+#define PIN_8_BYTE				0x74	// PIN8 GPIO8 byte address
+#define	PIN_8_BIT				7       // PIN8 GPIO8 bit number within byte
+#define	PIN_8_BIT_MASK			0x80	// PIN8 GPIO8 bit mask
+// PIN9 GPO7, PIN11 GPO6 - only outputs
+// PIN10 - GND
+// PIN12 SDA, PIN13 SCL - not reconfigured to IO in SLG46826
+#define PIN_14_BYTE				0x74	// PIN14 GPIO5 byte address
+#define	PIN_14_BIT				6       // PIN14 GPIO5 bit number within byte
+#define	PIN_14_BIT_MASK			0x40	// PIN14 GPIO5 bit mask
+#define PIN_15_BYTE				0x74	// PIN15 GPIO4 byte address
+#define	PIN_15_BIT				5       // PIN15 GPIO4 bit number within byte
+#define	PIN_15_BIT_MASK			0x20	// PIN15 GPIO4 bit mask
+#define PIN_16_BYTE				0x74	// PIN16 GPIO3 byte address
+#define	PIN_16_BIT				4       // PIN16 GPIO3 bit number within byte
+#define	PIN_16_BIT_MASK			0x10	// PIN16 GPIO3 bit mask
+#define PIN_17_BYTE				0x74	// PIN17 GPIO2 byte address
+#define	PIN_17_BIT				3       // PIN17 GPIO2 bit number within byte
+#define	PIN_17_BIT_MASK			0x08	// PIN17 GPIO2 bit mask
+#define PIN_18_BYTE				0x74	// PIN18 GPIO1 byte address
+#define	PIN_18_BIT				2       // PIN18 GPIO1 bit number within byte
+#define	PIN_18_BIT_MASK			0x04	// PIN18 GPIO1 bit mask
+#define PIN_19_BYTE				0x74	// PIN19 GPIO0 byte address
+#define	PIN_19_BIT				1       // PIN19 GPIO0 bit number within byte
+#define	PIN_19_BIT_MASK			0x02	// PIN19 GPIO0 bit mask
+// PIN20 - VDD
+
+
 #pragma region: unused makros
 // #define RAM_BYTE_0				0xD8	// User configurable RAM/OTP Byte 0
 // #define RAM_BYTE_1				0xD9	// User configurable RAM/OTP Byte 1
@@ -41,74 +116,4 @@
 // #define RAM_BYTE_14				0xD6	// User configurable RAM/OTP Byte 14
 // #define RAM_BYTE_15				0xD7	// User configurable RAM/OTP Byte 15
 
-// #define PIN_2_BYTE				0xF0	// PIN2 byte address
-// #define	PIN_2_BIT				0x02	// PIN2 bit location within byte
-// #define PIN_3_BYTE				0xF0	// PIN3 byte address
-// #define	PIN_3_BIT				0x04	// PIN3 bit location within byte
-// #define PIN_4_BYTE				0xF0	// PIN4 byte address
-// #define	PIN_4_BIT				0x08	// PIN4 bit location within byte
-// #define PIN_5_BYTE				0xF0	// PIN5 byte address
-// #define	PIN_5_BIT				0x10	// PIN5 bit location within byte
-// #define PIN_6_BYTE				0xF0	// PIN6 byte address
-// #define	PIN_6_BIT				0x20	// PIN6 bit location within byte
-// #define PIN_7_BYTE				0xF0	// PIN7 byte address
-// #define	PIN_7_BIT				0x40	// PIN7 bit location within byte
-// #define PIN_10_BYTE				0xF0	// PIN10 byte address
-// #define	PIN_10_BIT				0x80	// PIN10 bit location within byte
-
-// #define PIN_12_BYTE				0xF6	// PIN12 byte address
-// #define	PIN_12_BIT				0x01	// PIN12 bit location within byte
-// #define PIN_13_BYTE				0xF6	// PIN13 byte address
-// #define	PIN_13_BIT				0x02	// PIN13 bit location within byte
-// #define PIN_14_BYTE				0xF6	// PIN14 byte address
-// #define	PIN_14_BIT				0x04	// PIN14 bit location within byte
-// #define PIN_15_BYTE				0xF6	// PIN15 byte address
-// #define	PIN_15_BIT				0x08	// PIN15 bit location within byte
-// #define PIN_16_BYTE				0xF6	// PIN16 byte address
-// #define	PIN_16_BIT				0x10	// PIN16 bit location within byte
-// #define PIN_17_BYTE				0xF6	// PIN17 byte address
-// #define	PIN_17_BIT				0x20	// PIN17 bit location within byte
-// #define PIN_18_BYTE				0xF6	// PIN18 byte address
-// #define	PIN_18_BIT				0x40	// PIN18 bit location within byte
-// #define PIN_19_BYTE				0xF6	// PIN19 byte address
-// #define	PIN_19_BIT				0x80	// PIN19 bit location within byte
-
-// #define PIN_20_BYTE				0xF7	// PIN20 byte address
-// #define	PIN_20_BIT				0x01	// PIN20 bit location within byte
-
-// #define ACMP_OUT_BYTE			0xF7	// ACMP Output Byte Address
-// #define ACMP0_OUT_BIT			0x02	// ACMP0 Output Bit
-// #define ACMP1_OUT_BIT			0x04	// ACMP1 Output Bit
-// #define ACMP2_OUT_BIT			0x08	// ACMP2 Output Bit
-// #define ACMP3_OUT_BIT			0x10	// ACMP3 Output Bit
-
-// #define VREF_50mv				0x00	// ACMP Voltage Reference 50mv	
-// #define VREF_100mv				0x01	// ACMP Voltage Reference 100mv	
-// #define VREF_150mv				0x02	// ACMP Voltage Reference 150mv	
-// #define VREF_200mv				0x03	// ACMP Voltage Reference 200mv	
-// #define VREF_250mv				0x04	// ACMP Voltage Reference 250mv	
-// #define VREF_300mv				0x05	// ACMP Voltage Reference 300mv	
-// #define VREF_350mv				0x06	// ACMP Voltage Reference 350mv	
-// #define VREF_400mv				0x07	// ACMP Voltage Reference 400mv	
-// #define VREF_450mv				0x08	// ACMP Voltage Reference 450mv	
-// #define VREF_500mv				0x09	// ACMP Voltage Reference 500mv	
-// #define VREF_550mv				0x0A	// ACMP Voltage Reference 550mv	
-// #define VREF_600mv				0x0B	// ACMP Voltage Reference 600mv	
-// #define VREF_650mv				0x0C	// ACMP Voltage Reference 650mv	
-// #define VREF_700mv				0x0D	// ACMP Voltage Reference 700mv	
-// #define VREF_750mv				0x0E	// ACMP Voltage Reference 750mv	
-// #define VREF_800mv				0x0F	// ACMP Voltage Reference 800mv	
-// #define VREF_850mv				0x10	// ACMP Voltage Reference 850mv	
-// #define VREF_900mv				0x11	// ACMP Voltage Reference 900mv	
-// #define VREF_950mv				0x12	// ACMP Voltage Reference 950mv	
-// #define VREF_1000mv				0x13	// ACMP Voltage Reference 1000mv
-// #define VREF_1050mv				0x14	// ACMP Voltage Reference 1050mv
-// #define VREF_1100mv				0x15	// ACMP Voltage Reference 1100mv
-// #define VREF_1150mv				0x16	// ACMP Voltage Reference 1150mv
-// #define VREF_1200mv				0x17	// ACMP Voltage Reference 1200mv
-
-// #define ACMP0_VREF				0xCB	// ACMP Voltage Reference Address
-// #define ACMP1_VREF				0xCC	// ACMP Voltage Reference Address
-// #define ACMP2_VREF				0xCD	// ACMP Voltage Reference Address
-// #define ACMP3_VREF				0xCE	// ACMP Voltage Reference Address
 #pragma endregion
